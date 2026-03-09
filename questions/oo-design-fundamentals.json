@@ -1,0 +1,108 @@
+{
+  "topic": "Object-Oriented Design Fundamentals",
+  "difficulty": "intermediate",
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "A development team is building an e-POS system where the PaymentProcessor class needs to work with multiple payment types (card, cash, mobile). A junior developer proposes creating separate methods like processCard(), processCash(), and processMobile() in a single class. A senior developer suggests using a common process() method that behaves differently depending on the payment type at runtime. Which OO principle does the senior developer's approach primarily leverage?",
+      "options": {
+        "A": "Encapsulation, because the payment logic is hidden within the PaymentProcessor class boundary",
+        "B": "Polymorphism, because the process() method dispatches different behaviour based on the object type",
+        "C": "Abstraction, because the payment details are simplified into a single method interface",
+        "D": "Inheritance, because each payment type inherits the processing capability from a shared parent"
+      },
+      "correct": "B",
+      "rationale": "Polymorphism enables a single method interface (process()) to exhibit different behaviour at runtime depending on the actual object type. This is dynamic method dispatch — the core mechanism the senior developer is relying on to handle multiple payment types through one unified method.",
+      "distractorRationale": {
+        "A": "Encapsulation bundles data and methods and restricts access, but the scenario is about varying behaviour at runtime, not about hiding internal state from external access.",
+        "C": "Abstraction focuses on exposing essential features while hiding complexity, but the key design decision here is about runtime behaviour variation, not about simplifying an interface.",
+        "D": "While inheritance could be part of the implementation, the senior developer's emphasis is on a single method behaving differently at runtime — that is polymorphism, not the inheritance relationship itself."
+      }
+    },
+    {
+      "id": "q2",
+      "stem": "A team is designing a retail inventory system using UML. They have completed Use Case Diagrams and Activity Diagrams. According to the UML methodology sequence presented in the module, which modelling step should they undertake next, and what does it accomplish?",
+      "options": {
+        "A": "Sequence Diagrams, to model the functional workflow between objects involved in each process",
+        "B": "State Transition Diagrams, to model the dynamic lifecycle changes of individual objects",
+        "C": "Class Diagrams, to structure the data entities and define their attributes and relationships",
+        "D": "Component Diagrams, to decompose the system into deployable and reusable service units"
+      },
+      "correct": "C",
+      "rationale": "The UML methodology follows a specific sequence: Step 1 (Use Case), Step 2 (Activity), Step 3 (Class), Step 4 (State Transition), Step 5 (Sequence). After Activity Diagrams, the next step is Class Diagrams, which structure the scoped data by defining classes, attributes, and relationships.",
+      "distractorRationale": {
+        "A": "Sequence Diagrams are Step 5 in the methodology — they come after both Class Diagrams and State Transition Diagrams, not immediately after Activity Diagrams.",
+        "B": "State Transition Diagrams are Step 4 and model the behaviour of an object resulting from processing, but they follow Class Diagrams in the prescribed sequence.",
+        "D": "Component Diagrams are not part of the five-step UML methodology covered in this module. This distractor introduces a valid UML technique used elsewhere but not in this design process."
+      }
+    },
+    {
+      "id": "q3",
+      "stem": "An architect is reviewing a legacy e-POS system where the UI layer directly queries the database and contains business logic for calculating discounts. The system has become difficult to maintain as discount rules change frequently. Which architectural violation is the primary cause of the maintenance difficulty?",
+      "options": {
+        "A": "The system lacks a middle tier, so business logic and data access are coupled with the user interface",
+        "B": "The system lacks proper encapsulation, so the discount calculation methods are exposed publicly",
+        "C": "The system fails to apply polymorphism, so each discount type requires a separate code path",
+        "D": "The system omits use case modelling, so the functional requirements are not properly documented"
+      },
+      "correct": "A",
+      "rationale": "The three-tier architecture separates GUI (top tier), Application/business logic (middle tier), and Data (bottom tier). When the UI directly queries the database and contains business logic, the middle tier is effectively missing, creating tight coupling that makes changes to business rules expensive and error-prone.",
+      "distractorRationale": {
+        "B": "While encapsulation may also be violated, the root cause is an architectural layering problem — the business logic should not reside in the UI tier regardless of its visibility modifiers.",
+        "C": "Polymorphism could improve extensibility for discount types, but the fundamental issue is the absence of proper tier separation, not a missing design pattern within the business logic.",
+        "D": "Missing use case documentation is a process gap, not the cause of the runtime maintenance difficulty described. The code structure itself is the problem."
+      }
+    },
+    {
+      "id": "q4",
+      "stem": "A developer is designing class hierarchies for an e-POS system. They create a base Product class with attributes like name, price, and taxRate. They then create FoodProduct and ElectronicsProduct subclasses that inherit these attributes but override the calculateTax() method because food items are tax-exempt in certain regions. Which combination of OO concepts is being applied in this design?",
+      "options": {
+        "A": "Inheritance for sharing attributes across product types, and polymorphism for varying tax calculation behaviour",
+        "B": "Abstraction for hiding tax complexity from callers, and encapsulation for bundling product data together",
+        "C": "Generalisation for defining common product traits, and abstraction for simplifying the tax interface",
+        "D": "Encapsulation for protecting the taxRate field from modification, and inheritance for code reuse"
+      },
+      "correct": "A",
+      "rationale": "The subclasses inherit attributes (name, price, taxRate) from the base Product class — this is inheritance promoting code reuse through generalisation. The overridden calculateTax() method behaves differently depending on the subclass type at runtime — this is polymorphism via dynamic method dispatch.",
+      "distractorRationale": {
+        "B": "While abstraction and encapsulation are present in any well-designed class, the scenario specifically highlights attribute sharing (inheritance) and method overriding (polymorphism), not data hiding or interface simplification.",
+        "C": "Generalisation is part of inheritance, but this answer omits polymorphism — the method override is a key design element in the scenario that this option fails to capture.",
+        "D": "Encapsulation concerns access restriction, but the scenario does not describe protecting taxRate from modification — it describes overriding behaviour, which is polymorphism."
+      }
+    },
+    {
+      "id": "q5",
+      "stem": "A systems analyst is using conceptual prompts with an LLM to generate UML diagrams for a new POS system. After producing initial Use Case Diagrams, they notice the LLM output includes actors and use cases that fall outside the agreed system scope. According to the design process principles covered in the module, what should the analyst do?",
+      "options": {
+        "A": "Expand the system scope to incorporate the additional actors and use cases the LLM identified",
+        "B": "Critically evaluate the LLM output against the scoped requirements and remove elements outside scope",
+        "C": "Regenerate the diagrams with a more restrictive prompt that eliminates all optional features",
+        "D": "Accept the LLM output as-is since the additional elements may reveal unstated requirements",
+      },
+      "correct": "B",
+      "rationale": "The module emphasises critical analysis and reasoning when using LLM outputs. The design process includes a validation/feedback loop where outputs are evaluated against scoped requirements. The analyst should assess which elements are within scope and remove those that are not, rather than blindly accepting or rejecting the output.",
+      "distractorRationale": {
+        "A": "Expanding scope based on unvalidated LLM suggestions undermines the requirements-driven design process and could introduce feature creep without stakeholder agreement.",
+        "C": "Simply making the prompt more restrictive is a mechanical fix that skips the critical evaluation step — the analyst should assess the output intellectually, not just constrain the tool.",
+        "D": "Accepting unvalidated output contradicts the module's emphasis on critical analysis. While LLMs can surface useful ideas, each must be evaluated against the agreed scope before inclusion."
+      }
+    },
+    {
+      "id": "q6",
+      "stem": "A team is modelling a customer order process in their e-POS system. They need to represent how an Order object transitions between states: Created, Confirmed, Paid, Fulfilled, and Cancelled. Some transitions depend on conditions like payment success or stock availability. Which UML technique is most appropriate for modelling these transitions?",
+      "options": {
+        "A": "Activity Diagrams, because they capture the detailed flow of events across the ordering process",
+        "B": "Sequence Diagrams, because they show the interactions between objects during order processing",
+        "C": "State Transition Diagrams, because they model the dynamic lifecycle changes of an individual object",
+        "D": "Use Case Diagrams, because they define the functional scope of the order management feature"
+      },
+      "correct": "C",
+      "rationale": "State Transition Diagrams model the dynamics of an individual object — showing how it moves between defined states in response to events and conditions. The Order object's lifecycle (Created → Confirmed → Paid → Fulfilled, with conditional transitions) is exactly what this technique captures.",
+      "distractorRationale": {
+        "A": "Activity Diagrams detail the flow of events in a process, but they model workflows and actions, not the lifecycle states of a single object. They would show the ordering process, not the Order object's state changes.",
+        "B": "Sequence Diagrams model functional workflows showing how multiple objects interact over time, but the scenario asks about a single object's state changes, not inter-object communication.",
+        "D": "Use Case Diagrams define system scope and actor interactions at a high level. They do not model object states or transitions — they capture what the system does, not how an object behaves internally."
+      }
+    }
+  ]
+}
