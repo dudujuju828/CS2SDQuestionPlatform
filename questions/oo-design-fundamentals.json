@@ -103,6 +103,91 @@
         "B": "Sequence Diagrams model functional workflows showing how multiple objects interact over time, but the scenario asks about a single object's state changes, not inter-object communication.",
         "D": "Use Case Diagrams define system scope and actor interactions at a high level. They do not model object states or transitions — they capture what the system does, not how an object behaves internally."
       }
+    },
+    {
+      "id": "q7",
+      "stem": "A startup is building a delivery management platform. During the initial design phase, one team member wants to optimize the database schema immediately, while another argues they should first understand how the delivery tracking, driver assignment, and customer notification subsystems influence each other. Which design principle supports the second team member's position?",
+      "options": {
+        "A": "Encapsulation, because each subsystem should bundle its own data and methods independently before integration",
+        "B": "Abstraction, because the system should focus on essential delivery features before considering database details",
+        "C": "Inheritance, because the subsystems share common delivery processing characteristics that should be generalised first",
+        "D": "Systems thinking, because understanding interdependencies between subsystems informs better design decisions for the whole"
+      },
+      "correct": "D",
+      "rationale": "Systems thinking emphasises understanding how components influence one another within a domain context, taking a holistic view of the system as a whole before optimising individual parts. The second team member is advocating for understanding interdependencies and collaborations between subsystems before diving into component-level decisions like database schema design.",
+      "distractorRationale": {
+        "A": "Encapsulation concerns bundling data and methods and restricting access within a unit, not understanding how subsystems relate to each other at the architectural level.",
+        "B": "Abstraction involves focusing on essential features while hiding complexity, but the argument is specifically about understanding inter-component relationships and their influence on each other, not about simplifying features.",
+        "C": "Inheritance is about class-level code reuse through generalisation and specialisation relationships, not about understanding system-level interdependencies between subsystems."
+      }
+    },
+    {
+      "id": "q8",
+      "stem": "A developer is building a reporting module for an e-POS system. The module needs access to sales transaction data, but the team wants to prevent the reporting module from directly modifying transaction records. The developer creates a SalesData class that exposes read-only methods like getTotalSales() and getTransactionCount(), while keeping the internal transaction list and modification methods private. Which OO concept is primarily being applied?",
+      "options": {
+        "A": "Polymorphism, because the reporting module interacts with sales data through a uniform method interface",
+        "B": "Abstraction, because the complex transaction processing details are simplified into summary methods",
+        "C": "Encapsulation, because the internal data and modification methods are hidden and access is restricted",
+        "D": "Inheritance, because the reporting module reuses the data access capabilities defined in the SalesData class"
+      },
+      "correct": "C",
+      "rationale": "Encapsulation bundles data (the internal transaction list) and methods together in a single unit while hiding internal state and restricting direct access from outside. The scenario explicitly describes making internal data and modification methods private while exposing only controlled read-only methods — this is the core mechanism of encapsulation.",
+      "distractorRationale": {
+        "A": "While the methods provide a uniform interface, the design goal is access restriction and data hiding, not runtime behaviour variation. Polymorphism concerns different implementations behind a shared interface dispatched at runtime.",
+        "B": "Abstraction focuses on exposing essential features while hiding complexity, and while summary methods do simplify access, the primary concern here is preventing modification — an access control goal that defines encapsulation.",
+        "D": "The reporting module uses the SalesData class but does not inherit from it. Consuming a class's methods through its public interface is not inheritance — inheritance requires a subclass relationship with attribute and method sharing."
+      }
+    },
+    {
+      "id": "q9",
+      "stem": "A retail company currently runs a monolithic POS application where inventory management, payment processing, and customer loyalty features are tightly integrated in a single codebase. When the payment provider changes their API, the team discovers they must regression-test and redeploy the entire application. Which architectural approach would most directly address this deployment coupling problem?",
+      "options": {
+        "A": "Applying inheritance hierarchies to separate payment logic from inventory and loyalty class structures",
+        "B": "Introducing abstraction layers to simplify the payment processing interface used by other modules",
+        "C": "Implementing encapsulation to hide payment processing internals from the inventory management module",
+        "D": "Decomposing the system into independent microservices that communicate through well-defined APIs"
+      },
+      "correct": "D",
+      "rationale": "The microservices and API-driven approach creates small, independent computing services that communicate through APIs, increasing extensibility while remaining cost-effective. This directly addresses the coupling problem — when the payment service changes, only that service needs testing and redeployment, not the entire application.",
+      "distractorRationale": {
+        "A": "Inheritance hierarchies organise class relationships but do not address the deployment coupling problem. The issue is architectural — the entire application must be redeployed together — not about class structure within the codebase.",
+        "B": "Abstraction layers could reduce code-level dependencies on the payment API, but would not solve the deployment coupling — the application would still be a single deployable unit requiring full regression testing on every change.",
+        "C": "Encapsulation could hide internal payment details at the code level, but within a monolithic architecture, any change still requires redeploying the entire application. The problem is architectural separation, not information hiding."
+      }
+    },
+    {
+      "id": "q10",
+      "stem": "A systems analyst has gathered user needs through stakeholder interviews for a new e-POS system. Before creating any UML diagrams, the analyst maps out three key domain aspects: \"Who\" identifies the stakeholders and actors, \"What\" captures the domain behaviour and requirements, and \"How\" defines the system capabilities and specifications. What is the purpose of this mapping step in the design process?",
+      "options": {
+        "A": "To establish the system's class hierarchy by identifying inheritance relationships between domain objects",
+        "B": "To transform user requirements into system specifications by determining the domain aspects that inform design",
+        "C": "To create the validation criteria that will be used to test the final implementation against user needs",
+        "D": "To define the three-tier architecture by assigning each domain aspect to presentation, logic, or data layers"
+      },
+      "correct": "B",
+      "rationale": "The domain context determination transforms requirements onto specifications by mapping Who (stakeholders), What (domain behaviour and requirements), and How (system capabilities and specifications). This step bridges the gap between user needs and the UML design techniques that will model the system, ensuring design decisions are grounded in domain understanding.",
+      "distractorRationale": {
+        "A": "Class hierarchies are defined later during Class Diagram modelling (Step 3 of the UML methodology). The Who/What/How mapping operates at a higher level of analysis than individual class relationships and precedes any UML technique.",
+        "C": "Validation criteria are part of testing and quality assurance, not the initial domain analysis step. The mapping transforms requirements into design inputs, not into test specifications or acceptance criteria.",
+        "D": "While the three-tier architecture is relevant to system design, the Who/What/How mapping is about understanding domain aspects and transforming requirements into specifications, not about assigning components to architectural tiers."
+      }
+    },
+    {
+      "id": "q11",
+      "stem": "A team is designing an e-POS system and needs to model the checkout process. The process involves scanning barcodes, applying discount rules, calculating tax, processing payment, and updating inventory. A developer argues that the Checkout class should expose methods like startCheckout(), addItem(), and completePayment(), without revealing the internal steps of barcode lookup, discount calculation, or inventory adjustment. Which OO concept justifies this design decision?",
+      "options": {
+        "A": "Abstraction, because the essential checkout operations are exposed while hiding the implementation complexity",
+        "B": "Polymorphism, because the checkout methods can behave differently depending on the payment type used",
+        "C": "Inheritance, because the checkout functionality is derived from a more general transaction processing class",
+        "D": "Encapsulation, because the checkout data and methods are bundled together within a single class unit"
+      },
+      "correct": "A",
+      "rationale": "Abstraction focuses on exposing essential features while hiding background details and complexities, capturing the most important aspects of a system. The developer's design exposes high-level operations (startCheckout, addItem, completePayment) that represent essential checkout functionality while hiding the complex internal steps — this is abstraction at the interface design level.",
+      "distractorRationale": {
+        "B": "Polymorphism involves different implementations behind a shared interface dispatched at runtime. The scenario describes choosing which features to expose and which to hide, not varying behaviour based on object type at runtime.",
+        "C": "The scenario does not describe any class inheritance relationship or subclass hierarchy. The design decision is about what to expose versus what to hide at the interface level, not about deriving functionality from a parent class.",
+        "D": "While encapsulation is related — it bundles data and methods and restricts access — the primary concern here is choosing which essential features to present to callers and hiding the complexity behind them. This conceptual simplification of the interface is abstraction, distinct from the mechanical access restriction of encapsulation."
+      }
     }
   ]
 }
