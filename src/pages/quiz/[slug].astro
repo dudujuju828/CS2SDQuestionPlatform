@@ -1,0 +1,20 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Quiz from "../../components/Quiz.astro";
+import { loadAllTopics } from "../../lib/questions";
+import type { GetStaticPaths } from "astro";
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const topics = await loadAllTopics();
+  return topics.map(({ slug, data }) => ({
+    params: { slug },
+    props: { data },
+  }));
+};
+
+const { data } = Astro.props;
+---
+
+<Layout title={`${data.topic} — CS2SD Quiz`}>
+  <Quiz questions={data.questions} topic={data.topic} difficulty={data.difficulty} />
+</Layout>
