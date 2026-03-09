@@ -77,7 +77,7 @@
         "A": "Expand the system scope to incorporate the additional actors and use cases the LLM identified",
         "B": "Critically evaluate the LLM output against the scoped requirements and remove elements outside scope",
         "C": "Regenerate the diagrams with a more restrictive prompt that eliminates all optional features",
-        "D": "Accept the LLM output as-is since the additional elements may reveal unstated requirements",
+        "D": "Accept the LLM output as-is since the additional elements may reveal unstated requirements"
       },
       "correct": "B",
       "rationale": "The module emphasises critical analysis and reasoning when using LLM outputs. The design process includes a validation/feedback loop where outputs are evaluated against scoped requirements. The analyst should assess which elements are within scope and remove those that are not, rather than blindly accepting or rejecting the output.",
