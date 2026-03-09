@@ -1,0 +1,176 @@
+{
+  "topic": "Use Case Diagrams",
+  "difficulty": "intermediate",
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "A team is modelling an e-POS system and notices that both the \"Create Order\" and \"Process Return\" use cases require the system to verify customer identity before proceeding. The verification logic is identical in both cases and must always execute. Which use case relationship should the team apply to avoid duplicating this shared behaviour?",
+      "options": {
+        "A": "<<extend>>, because the verification behaviour conditionally extends both the ordering and return processes",
+        "B": "<<include>>, because both use cases mandatorily incorporate the same shared verification behaviour",
+        "C": "Generalisation, because the verification use case is a parent from which ordering and returns inherit",
+        "D": "Association, because the verification functionality needs to be linked to the actors in both use cases"
+      },
+      "correct": "B",
+      "rationale": "The <<include>> relationship is used when a specific behaviour is shared across multiple use cases and is mandatorily incorporated into each base use case. Since verification is required (not optional) in both Create Order and Process Return, <<include>> is the correct relationship to represent this shared, mandatory behaviour.",
+      "distractorRationale": {
+        "A": "<<extend>> represents optional behaviour that extends a base use case under certain conditions. Verification is mandatory in both cases, not conditional, making <<include>> the appropriate relationship.",
+        "C": "Generalisation represents an inheritance relationship between use cases where one is a specialised version of another. Verification is a shared sub-behaviour included in other use cases, not a parent use case from which others inherit.",
+        "D": "Association links actors to use cases, not use cases to other use cases. The question asks about the relationship between use cases that share common mandatory behaviour."
+      }
+    },
+    {
+      "id": "q2",
+      "stem": "An e-POS system has a \"Process Payment\" use case. The team decides that if a customer's payment fails three consecutive times, the system should trigger a fraud alert. This fraud alert behaviour is not part of the normal payment flow and only activates under a specific condition defined in the base use case. Which use case relationship best represents this situation?",
+      "options": {
+        "A": "<<include>>, because the fraud alert is a necessary subprocess that must execute during every payment transaction",
+        "B": "Generalisation, because the fraud alert use case inherits the base processing behaviour from Process Payment",
+        "C": "Association, because the fraud alert functionality needs to be connected to the payment processing actor",
+        "D": "<<extend>>, because the fraud alert is optional behaviour that extends Process Payment under a defined condition"
+      },
+      "correct": "D",
+      "rationale": "The <<extend>> relationship represents behaviour that extends a base use case only when specific conditions are met. The fraud alert activates only when payment fails three times — this is conditional, optional behaviour extending the base Process Payment use case, with the required conditions defined by and captured in the base use case.",
+      "distractorRationale": {
+        "A": "<<include>> is for mandatory shared behaviour that always executes as part of the base use case. The fraud alert only triggers under a specific failure condition, making it optional and conditional rather than mandatory.",
+        "B": "Generalisation represents an inheritance relationship where one use case is a specialised version of another. The fraud alert is a separate conditional behaviour triggered by failure, not a specialised version of payment processing.",
+        "C": "Association connects actors to use cases, not use cases to other use cases. The relationship here is between two use cases (Process Payment and Fraud Alert), not between an actor and a use case."
+      }
+    },
+    {
+      "id": "q3",
+      "stem": "A systems analyst is modelling an e-POS system that automatically backs up transaction data at midnight every day. No human user initiates this process. The analyst needs to represent the entity that triggers the backup use case in the diagram. How should this triggering entity be modelled?",
+      "options": {
+        "A": "As a machine actor, because the system timer is a non-human entity that initiates the use case through a temporal trigger",
+        "B": "As a system boundary element, because the backup process is an internal function contained entirely within the system scope",
+        "C": "As an <<include>> relationship, because the backup is a shared subprocess that runs within the main transaction use case",
+        "D": "As a use case with no connected actor, because automated processes do not require external entity representation"
+      },
+      "correct": "A",
+      "rationale": "An actor can be a human user, external system, or hardware device. A system timer that triggers the backup at midnight is a machine actor — a non-human entity that interacts with the system through a temporal trigger. It should be modelled as an actor connected to the Backup Data use case via an association.",
+      "distractorRationale": {
+        "B": "The system boundary defines the scope of what the system performs and what external entities impact it, not the entity that triggers actions. The timer is an external triggering entity, not part of the system boundary definition.",
+        "C": "<<include>> is a relationship between use cases for shared mandatory behaviour. The timer is the triggering entity for the backup, not a relationship between use cases within the diagram.",
+        "D": "Every use case in a use case diagram should have at least one actor that initiates or interacts with it. Automated processes triggered by timers use machine actors to represent the non-human initiating entity."
+      }
+    },
+    {
+      "id": "q4",
+      "stem": "A development team is modelling a POS system and debates whether to include a third-party payment gateway in their use case diagram. The gateway processes card payments but is maintained and operated by an external company. How should the team represent this in the use case diagram?",
+      "options": {
+        "A": "Place the payment gateway inside the system boundary as a use case, since it performs a function the POS system depends on",
+        "B": "Model the payment gateway as a use case connected to the customer actor via a direct association relationship",
+        "C": "Place the payment gateway outside the system boundary as an external actor, since it is a separate system that interacts with the POS",
+        "D": "Omit the payment gateway from the diagram entirely, since external systems fall outside the scope of use case modelling"
+      },
+      "correct": "C",
+      "rationale": "The system boundary defines the scope of what the intended system is capable of performing. A third-party payment gateway is an external system maintained by another company — it interacts with the POS system but is not part of it. Since actors can be human users, external systems, or hardware devices, the gateway should be modelled as an external actor outside the system boundary.",
+      "distractorRationale": {
+        "A": "The system boundary encloses what the intended system performs. The payment gateway is maintained externally and is not part of the POS system's own capabilities, so placing it inside the boundary misrepresents the system scope.",
+        "B": "The payment gateway interacts with the POS system, not directly with the customer in the use case model. It should be modelled as an actor connected to payment-related use cases, not as a use case connected to the customer.",
+        "D": "External systems that interact with the modelled system are important entities that should be represented as actors. Use case diagrams specifically include external entities that impact or interact with the system."
+      }
+    },
+    {
+      "id": "q5",
+      "stem": "A systems analyst is documenting the \"Generate Sales Report\" use case for an e-POS system. The report runs automatically at the end of each business day at 11:59 PM and can also be manually requested by a store manager at any time. The analyst is completing the Trigger section of the Use Case Description. How should both triggers be documented?",
+      "options": {
+        "A": "As two separate use cases, because each trigger represents a distinct functional requirement with different initiating actors",
+        "B": "As two triggers within one use case — a temporal trigger for the scheduled run and an external trigger for the manual request",
+        "C": "As an <<extend>> relationship, because the manual request optionally extends the automated scheduled report generation",
+        "D": "As a single external trigger, because both triggers ultimately result in the same report generation output behaviour"
+      },
+      "correct": "B",
+      "rationale": "The Trigger section of a Use Case Description captures the events that cause the use case to execute. A use case can have multiple triggers: a temporal trigger (system timer at 11:59 PM) and an external trigger (manager's manual request). Both initiate the same use case behaviour — generating the sales report — and belong in the same Trigger section.",
+      "distractorRationale": {
+        "A": "Both triggers result in the same functional behaviour (generating a report). Creating separate use cases would duplicate the flow of events, sub-flows, and conditions, violating the principle that there should be no duplicated use case in the use case model.",
+        "C": "<<extend>> represents optional behaviour that extends a base use case under conditions. The manual request is not an extension of the automated run — both are independent triggers for the same use case with the same behaviour.",
+        "D": "A temporal trigger (scheduled timer) and an external trigger (user action) are fundamentally different types of events. Collapsing them into one type loses the important distinction between automated scheduling and user-initiated actions."
+      }
+    },
+    {
+      "id": "q6",
+      "stem": "An analyst is documenting the \"Create Order\" use case and notices that the payment verification step within it is also required by the \"Process Refund\" and \"Manage Subscription\" use cases. The verification behaviour is identical across all three. The analyst is deciding where to place this shared behaviour in the Use Case Description. Which section is most appropriate?",
+      "options": {
+        "A": "The Flow of Events section, because the payment verification is a sequential step within the main order creation workflow",
+        "B": "The Alternative Events section, because payment verification is an exceptional path that may not always execute",
+        "C": "The Conditions section, because payment verification is a business rule that controls the behaviour of the use case",
+        "D": "The Sub-flows section, because payment verification is a common constituent shared by more than one use case"
+      },
+      "correct": "D",
+      "rationale": "The Sub-flows section captures common constituents that appear in more than one use case — parts of the flow of events that can be shared by other use cases. Since payment verification is used identically by Create Order, Process Refund, and Manage Subscription, it is a shared sub-flow that should be documented in this section.",
+      "distractorRationale": {
+        "A": "While payment verification does appear within the flow of events, the fact that it is shared across multiple use cases makes it a sub-flow rather than an inline step. Documenting it only in Flow of Events misses the reuse identification.",
+        "B": "Alternative/exceptional events capture unanticipated events specified by the systems analysts, such as error handling for power failures. Payment verification is a planned, expected step, not an exceptional deviation from the normal flow.",
+        "C": "Conditions are business rules that control use case behaviour (e.g., when payment is received AND goods are received then close the order). Payment verification is a behavioural sequence of steps, not a rule or constraint."
+      }
+    },
+    {
+      "id": "q7",
+      "stem": "A product owner and a systems analyst are planning the first release of an e-POS system. They have identified 15 use cases but can only implement 8 in the initial version due to resource constraints. The analyst needs to determine which use cases to implement first. Which section of the Use Case Description directly supports this decision?",
+      "options": {
+        "A": "The Importance Level section, because it enables users to explicitly prioritise use cases across different system versions",
+        "B": "The Stakeholders and Interests section, because it identifies which business stakeholders benefit from each use case",
+        "C": "The Description section, because it defines the goal of each use case and reveals which ones are most essential",
+        "D": "The Trigger section, because use cases with external triggers from primary actors should be implemented before others"
+      },
+      "correct": "A",
+      "rationale": "The Importance Level section (high, medium, low) enables users to explicitly prioritise use cases for implementation across different versions of the system. This directly supports the decision of which use cases to include in the first release by providing a structured prioritisation mechanism.",
+      "distractorRationale": {
+        "B": "The Stakeholders and Interests section identifies who is interested in each use case and the value it brings to the business, but it does not provide an explicit prioritisation ranking for ordering implementation across releases.",
+        "C": "The Description section defines the goal that the use case aims to achieve, which helps understand its purpose but does not explicitly rank use cases against each other for implementation priority across versions.",
+        "D": "The Trigger section documents what events cause the use case to execute. Trigger type does not determine implementation priority — a temporally triggered automated process might be less critical than a user-initiated core business function."
+      }
+    },
+    {
+      "id": "q8",
+      "stem": "An e-POS system has three types of users: Guest Customer, Registered Customer, and Premium Customer. All three can browse products and add items to a cart. Registered and Premium customers can also view order history, and only Premium customers can access exclusive deals. The analyst wants to avoid drawing redundant association lines in the use case diagram. Which relationship best structures these actors?",
+      "options": {
+        "A": "<<include>> relationships between the customer types, because each level includes the capabilities of the previous level",
+        "B": "<<extend>> relationships between the customer types, because premium capabilities conditionally extend the base customer behaviour",
+        "C": "Generalisation, because the specialised customer actors inherit the use case associations of the general customer actor",
+        "D": "Separate association lines from each actor to every applicable use case, because each customer type has distinct access rights"
+      },
+      "correct": "C",
+      "rationale": "Generalisation (inheritance) between actors allows specialised actors to inherit the use case associations of a more general actor. Guest Customer connects to browse/cart use cases; Registered Customer generalises Guest and adds order history; Premium Customer generalises Registered and adds exclusive deals — eliminating redundant association lines through actor inheritance.",
+      "distractorRationale": {
+        "A": "<<include>> is a relationship between use cases, not between actors. It represents mandatory shared behaviour within use cases, not hierarchical capability structures between different actor types.",
+        "B": "<<extend>> is also a relationship between use cases that represents conditional optional behaviour. It cannot be applied between actors to represent escalating capability levels in an actor hierarchy.",
+        "D": "Drawing association lines from each actor to every applicable use case would be functionally correct but creates visual redundancy. Generalisation eliminates duplicate association lines through inheritance, which is the recommended approach for hierarchical actor structures."
+      }
+    },
+    {
+      "id": "q9",
+      "stem": "A company is replacing its legacy POS system with a modern cloud-based application. The systems analyst decides to start by examining the existing system's functionality and documenting it in use case diagrams before designing the new system. According to the design role of use case diagrams, which purpose does this approach serve?",
+      "options": {
+        "A": "Test case development, because use cases from the legacy system provide ready-made test specifications for the new system",
+        "B": "Requirement prioritisation, because the legacy system reveals which use cases were exercised most frequently by users",
+        "C": "Forward engineering, because documenting existing system functionality through use cases leads to designing new systems",
+        "D": "System scope specification, because the legacy system's existing architecture defines the scope boundary for the new system"
+      },
+      "correct": "C",
+      "rationale": "Forward engineering involves renovation and reclamation of existing systems leading to new systems. By examining the existing system's functionality and documenting it in use case diagrams, the analyst is performing forward engineering — using the discovered context, actors, use cases, events, and conditions from the current system to drive the design of the replacement.",
+      "distractorRationale": {
+        "A": "While use cases can aid in test case development, the scenario describes documenting existing functionality to inform new system design, not generating test specifications for quality assurance purposes.",
+        "B": "Requirement prioritisation uses the Importance Level section to rank use cases for implementation. Documenting a legacy system reveals what functions exist, not how frequently they were used or their relative priority.",
+        "D": "The legacy system's architecture may inform understanding, but system scope specification for the new system should be driven by current stakeholder needs and goals, not by blindly adopting the old system's boundaries."
+      }
+    },
+    {
+      "id": "q10",
+      "stem": "A systems analyst is using a requirements acquisition table to document actors, functional requirements, rules/conditions, data elements, and critique notes from LLM outputs for an e-POS system. They notice that one row has a customer actor with several functional requirements listed, but the \"Rules/Conditions\" and \"Data elements\" columns are empty. What risk does this gap present to the use case modelling process?",
+      "options": {
+        "A": "The use case diagram will lack proper association lines, because business rules determine which actors connect to which use cases",
+        "B": "The system boundary cannot be properly defined, because data elements establish which functions are internal to the system",
+        "C": "The importance level cannot be assigned, because conditions determine the prioritisation order of each use case for implementation",
+        "D": "The use case descriptions will be incomplete, because conditions control use case behaviour and data elements define information consumed"
+      },
+      "correct": "D",
+      "rationale": "The Use Case Description includes Conditions (business rules that control use case behaviours) and data elements (information consumed during the course of action). Empty rules/conditions and data elements in the requirements acquisition table means the corresponding Use Case Description sections cannot be properly completed, leading to incomplete design specifications.",
+      "distractorRationale": {
+        "A": "Association lines connect actors to use cases based on their interactions, not based on business rules. Rules control the dynamic behaviour within use cases, not the structural connections between actors and use cases in the diagram.",
+        "B": "The system boundary defines the scope of what the system performs, established through scope analysis of the intended system's purpose and goals. Data elements inform the content within use case descriptions, not the system boundary definition.",
+        "C": "Importance level is set by user prioritisation (high, medium, low) based on business value and release planning. Conditions are business rules within use cases that control behaviour, not criteria for prioritisation ordering."
+      }
+    }
+  ]
+}
