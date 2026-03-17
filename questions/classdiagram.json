@@ -57,6 +57,24 @@
       }
     },
     {
+      "id": "q24",
+      "stem": "Examine the class diagram above. The Order class has two relationships: a filled diamond to LineItem and a plain line to CustomerAccount. The Order class also stores an 'account: Object' attribute that references the CustomerAccount. What does the plain line between Order and CustomerAccount indicate about how these two classes interact?",
+      "stemImage": "/images/questions/diagram-q24.svg",
+      "options": {
+        "A": "CustomerAccount is a structural part of Order that depends on the order's lifecycle and is destroyed when the order is deleted",
+        "B": "Order references or exchanges messages with CustomerAccount as an independent collaborating class that exists separately",
+        "C": "CustomerAccount inherits all attributes and operations from Order as a specialised subclass in a generalisation hierarchy",
+        "D": "Order and CustomerAccount are merged into a single implementation class because the plain line denotes composition"
+      },
+      "correct": "B",
+      "rationale": "A plain line in UML denotes association — classes are associated when one sends a message to the other, or when one has an attribute whose value is manipulated by the other. The Order class references CustomerAccount through its 'account: Object' attribute, and both classes exist independently. This is distinct from the filled diamond (composition) used for LineItem, where parts depend on the container's lifecycle.",
+      "distractorRationale": {
+        "A": "Lifecycle dependency and structural containment are indicated by a filled diamond (composition), not a plain line. The plain line specifically means the classes collaborate without one depending on the other's lifecycle — CustomerAccount persists independently of any order.",
+        "C": "Generalisation (inheritance) is shown with an open triangle arrowhead, not a plain line. A plain line indicates association, where two classes interact through message-passing or attribute references without any inheritance relationship.",
+        "D": "A plain line denotes association, not composition. Composition uses a filled diamond and implies the classes are merged in implementation. Association means both classes remain separate and independent, connected through references or message exchanges."
+      }
+    },
+    {
       "id": "q1",
       "stem": "A developer is designing a class diagram for an online bookstore. The 'order' class has attributes such as orderID, orderDate, and totalCost, along with operations like add(), remove(), and calculateTotal(). A colleague suggests that the orderID attribute should be marked with a '+' visibility symbol so that other associated classes can directly read and modify it. What is the most significant design concern with this approach?",
       "options": {
