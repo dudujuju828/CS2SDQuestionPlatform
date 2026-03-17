@@ -341,6 +341,60 @@
         "B": "Generalisation implies users are-a-kind-of post, which is semantically nonsensical. Users and posts are fundamentally different domain concepts — users create and interact with posts, they do not inherit from them.",
         "C": "Users are not contained parts of a post. Aggregation represents a has-a relationship where the container collects its parts. A post does not 'have' users as structural components — users are independent actors that interact with posts."
       }
+    },
+    {
+      "id": "q21",
+      "stem": "Examine the class diagram above. Both relationships use composition (filled diamond). Classrooms are permanently part of the school building and are demolished when the school is torn down. Students, however, can transfer between schools and continue to exist independently. Which relationship is incorrectly modelled and what should it change to?",
+      "stemImage": "/images/questions/diagram-q21.svg",
+      "options": {
+        "A": "School-Classroom should change to aggregation because classrooms can be physically relocated to a different school building",
+        "B": "Both relationships are correctly modelled as composition because both classrooms and students are contained within the school",
+        "C": "Classroom-Student should change to aggregation because students have independent lifecycles and are not destroyed with the classroom",
+        "D": "Classroom-Student should change to generalisation because students are specialised types of classroom participants with inherited roles"
+      },
+      "correct": "C",
+      "rationale": "The Classroom-Student relationship is incorrectly modelled as composition. Students have independent lifecycles — they can transfer between schools and classrooms, and they continue to exist if a classroom or school is demolished. This requires aggregation (open diamond), not composition. The School-Classroom composition is correct because classrooms are structurally part of the building and are destroyed with it.",
+      "distractorRationale": {
+        "A": "The School-Classroom composition is correct. Classrooms are permanently part of the school building and cannot be relocated — they are destroyed when the school is demolished, which is the defining characteristic of composition.",
+        "B": "While both classrooms and students are within the school system, they have different lifecycle dependencies. Classrooms depend on the school's lifecycle (composition), but students do not — they exist independently and survive the school's closure.",
+        "D": "Generalisation implies students are a kind of classroom, which is semantically incorrect. Students are not specialised types of classrooms — they are independent entities contained within classrooms, which is an aggregation relationship."
+      }
+    },
+    {
+      "id": "q22",
+      "stem": "Examine the class diagram above. Both relationships from Order use composition (filled diamond). LineItems are created specifically for an order and are destroyed when the order is deleted. Customers exist independently in the system and persist after any individual order is closed or removed. Which change correctly fixes the design flaw?",
+      "stemImage": "/images/questions/diagram-q22.svg",
+      "options": {
+        "A": "Order-Customer should change to association, because customers are independent entities that collaborate with orders rather than contained parts",
+        "B": "Order-LineItem should change to aggregation, because line items are references to catalogue products that exist independently of the order",
+        "C": "Both relationships should change to aggregation, because an order is a container that groups customer and item references together",
+        "D": "Order-Customer should change to generalisation, because a customer is a specialised type of order participant with inherited account features"
+      },
+      "correct": "A",
+      "rationale": "The Order-Customer composition is incorrect. Customers are independent entities that exist before, during, and after any individual order — they are not structurally contained within an order and are not destroyed when an order is deleted. Association (plain line) correctly represents this collaboration. The Order-LineItem composition is correct because line items depend on the order's lifecycle.",
+      "distractorRationale": {
+        "B": "Order-LineItem composition is correct. Line items are created specifically for an order and have no meaning outside of it — they are destroyed when the order is deleted, which is the defining lifecycle dependency of composition.",
+        "C": "Changing both to aggregation would incorrectly imply that line items can exist independently of their order. Line items have lifecycle dependency on the order and should remain as composition.",
+        "D": "Generalisation implies a customer is-a-kind-of order, which is semantically nonsensical. A customer is not a specialised type of order — they are fundamentally different domain concepts that interact through association."
+      }
+    },
+    {
+      "id": "q23",
+      "stem": "Examine the class diagram above. Both relationships from Document use aggregation (open diamond). Images exist in a shared media library and can appear in multiple documents — deleting a document does not remove its images. Paragraphs are written specifically for the document and are meaningless outside of it — deleting the document destroys all its paragraphs. Which change correctly fixes the design flaw?",
+      "stemImage": "/images/questions/diagram-q23.svg",
+      "options": {
+        "A": "Document-Image should change to composition because images are visually embedded within the rendered layout of the document pages",
+        "B": "Document-Paragraph should change to composition because paragraphs depend on the document's lifecycle and are destroyed with it",
+        "C": "Both relationships should change to composition because the document structurally contains both images and paragraphs as embedded parts",
+        "D": "Document-Paragraph should change to association because paragraphs and documents interact only through text-editing message exchanges"
+      },
+      "correct": "B",
+      "rationale": "The Document-Paragraph relationship should be composition (filled diamond) because paragraphs depend on the document's lifecycle — they are created specifically for the document, have no meaning outside of it, and are destroyed when the document is deleted. The Document-Image aggregation is correct because images exist independently in a shared library and can appear in multiple documents.",
+      "distractorRationale": {
+        "A": "Visual embedding does not determine the UML relationship type — lifecycle dependency does. Images exist independently in a shared library and can be reused across multiple documents. Deleting a document does not remove its images, so aggregation is correct.",
+        "C": "Changing both to composition would incorrectly imply that images are destroyed when the document is deleted. Since images exist independently in a shared library and can appear in multiple documents, they have no lifecycle dependency on any single document.",
+        "D": "Association would underrepresent the structural containment between documents and paragraphs. Paragraphs are structural parts of a document with lifecycle dependency — this is a composition relationship, not a simple message-passing interaction."
+      }
     }
   ]
 }

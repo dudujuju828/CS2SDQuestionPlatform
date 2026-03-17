@@ -1,6 +1,7 @@
 export interface Question {
   id: string;
   stem: string;
+  stemImage?: string;
   options: Record<string, string>;
   correct: string;
   rationale: string;

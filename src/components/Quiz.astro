@@ -32,6 +32,7 @@ const { questions, topic, difficulty } = Astro.props;
     {questions.map((q, i) => (
       <li class="question-card" id={`card-${q.id}`} data-id={q.id}>
         <div class="question-number">Question {i + 1}</div>
+        {q.stemImage && <img src={q.stemImage} alt="Class diagram for this question" class="stem-image" />}
         <p class="stem">{q.stem}</p>
         <div class="options" data-correct={q.correct}>
           {Object.entries(q.options).map(([key, text]) => (
@@ -286,6 +287,16 @@ const { questions, topic, difficulty } = Astro.props;
     letter-spacing: 0.05em;
     color: #9ca3af;
     margin-bottom: 0.5rem;
+  }
+
+  .stem-image {
+    display: block;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    border: 1px solid #e5e7eb;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    background: #fafafa;
   }
 
   .stem {
