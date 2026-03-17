@@ -1,0 +1,346 @@
+{
+  "topic": "Class Diagrams",
+  "difficulty": "intermediate",
+  "questions": [
+    {
+      "id": "q1",
+      "stem": "A developer is designing a class diagram for an online bookstore. The 'order' class has attributes such as orderID, orderDate, and totalCost, along with operations like add(), remove(), and calculateTotal(). A colleague suggests that the orderID attribute should be marked with a '+' visibility symbol so that other associated classes can directly read and modify it. What is the most significant design concern with this approach?",
+      "options": {
+        "A": "Public visibility allows any associated class to access and modify the orderID, which could compromise data integrity across the system",
+        "B": "Public visibility prevents the order class from defining operations that use the orderID attribute in internal calculations",
+        "C": "Public visibility forces all subclasses to override the orderID attribute with their own implementation of the identifier",
+        "D": "Public visibility requires the orderID to be assigned a default value at the time the class is first defined in the model"
+      },
+      "correct": "A",
+      "rationale": "The '+' symbol denotes public visibility, meaning any associated class can access and modify that attribute. For a critical identifier like orderID, this risks external modification that could break referential integrity. Using private ('-') visibility with controlled access through operations is the standard design practice to protect data integrity.",
+      "distractorRationale": {
+        "B": "Public visibility does not prevent the owning class from using its own attributes in internal operations. The class can still reference and use orderID in its methods regardless of the visibility setting.",
+        "C": "Visibility does not force subclasses to override attributes. Inheritance allows subclasses to inherit attributes as-is, and overriding applies to operations (polymorphism), not to attribute visibility declarations.",
+        "D": "Default values are an independent feature of attribute specification and are not determined by visibility. An attribute can have a default value regardless of whether it is public, private, or protected."
+      }
+    },
+    {
+      "id": "q2",
+      "stem": "A team is modelling a library system and identifies a 'Library' class and a 'Book' class. The requirement states that every library must contain at least one book, but a book might exist independently without belonging to any library. Which multiplicity notation correctly represents this relationship from Library to Book?",
+      "options": {
+        "A": "Library 0..* ——— 0..* Book, because both classes may exist with zero or more connections to each other",
+        "B": "Library 1..* ——— 1..* Book, because both classes must always have at least one connection to each other",
+        "C": "Library 1..* ——— 0..* Book, because a library needs at least one book while a book may belong to zero or more libraries",
+        "D": "Library 0..1 ——— 1..* Book, because a library optionally exists while each book must belong to at least one library"
+      },
+      "correct": "C",
+      "rationale": "The requirement specifies that a library must have at least one book (1..*) and a book can exist without belonging to any library or can belong to multiple libraries (0..*). The multiplicity 1..* on the Library side and 0..* on the Book side correctly captures these constraints.",
+      "distractorRationale": {
+        "A": "Using 0..* on the Library side would allow a library to have zero books, which violates the stated requirement that every library must contain at least one book.",
+        "B": "Using 1..* on the Book side would require every book to belong to at least one library, but the requirement explicitly states that a book might exist independently without belonging to any library.",
+        "D": "Using 0..1 on the Library side implies a library is optional and can have at most one connection, and 1..* on the Book side forces every book to belong to at least one library — both contradict the stated requirements."
+      }
+    },
+    {
+      "id": "q3",
+      "stem": "A software designer creates a 'shape' superclass with attributes area (double) and colour (string), plus an operation calArea(). Three subclasses — circle, triangle, and rectangle — each inherit from shape and implement their own version of calArea() using different formulas. Which object-oriented concept is demonstrated by the subclasses implementing calArea() differently?",
+      "options": {
+        "A": "Encapsulation, because each subclass hides the calculation formula inside its own class boundary from external access",
+        "B": "Polymorphism, because each subclass provides a different implementation of the same inherited operation signature",
+        "C": "Aggregation, because each subclass contains a different formula component that composes the area calculation",
+        "D": "Abstraction, because each subclass removes unnecessary details by defining only the relevant formula for its shape"
+      },
+      "correct": "B",
+      "rationale": "Polymorphism enables a method to perform in multiple forms. When circle, triangle, and rectangle each implement calArea() with different formulas (e.g., pi*r^2, base*height/2, width*height), they override the inherited operation — this is runtime polymorphism (method overriding), where the object decides which form of the method to execute.",
+      "distractorRationale": {
+        "A": "Encapsulation is about bundling attributes and operations within a class and controlling access via visibility. While the formulas are inside each class, the key concept here is that the same operation name behaves differently depending on the object type, which is polymorphism.",
+        "C": "Aggregation describes a has-a relationship where one class is a container of another. The subclasses do not contain formula objects — they override an inherited method, which is a polymorphic behaviour, not a structural containment relationship.",
+        "D": "Abstraction involves hiding complexity and exposing only essential features. While the shape class may abstract common properties, the specific scenario of multiple subclasses implementing the same method differently is the defining characteristic of polymorphism."
+      }
+    },
+    {
+      "id": "q4",
+      "stem": "In an e-commerce class diagram, a 'customerAccount' class has attributes including password (string), emailAddress (string), and attemptCounter (int := 3). A junior designer marks the password attribute with '+' visibility. A senior designer reviews the model and flags this as incorrect. What visibility symbol should replace '+' for the password attribute, and why?",
+      "options": {
+        "A": "The '#' symbol, because protected visibility allows only the customerAccount subclasses to read and validate the password",
+        "B": "The '-' symbol, because private visibility restricts password access to the customerAccount class itself for security purposes",
+        "C": "The '+' symbol is correct and should remain, because associated classes need public access to verify customer credentials",
+        "D": "The '#' symbol, because protected visibility enables both the customerAccount class and all associated classes to use it"
+      },
+      "correct": "B",
+      "rationale": "Private visibility ('-') means only the class itself can access the attribute. For sensitive data like passwords, restricting access to the owning class prevents associated classes from directly reading or modifying the value. Credential validation should be handled through the class's own operations like validateCredentials(), not by exposing the password attribute.",
+      "distractorRationale": {
+        "A": "Protected ('#') allows subclasses to access the attribute, which is more permissive than necessary for a sensitive credential. Password access should be restricted to the owning class only, and validation logic should be exposed through operations rather than attribute access.",
+        "C": "Public visibility for a password attribute is a significant security flaw. Associated classes should not have direct access to credential data. Instead, the customerAccount class should expose a validateCredentials() operation that checks the password internally.",
+        "D": "Protected visibility does not grant access to all associated classes — it grants access to subclasses. However, even subclass access to raw password data is unnecessarily permissive for a sensitive attribute that should remain private."
+      }
+    },
+    {
+      "id": "q5",
+      "stem": "A designer is modelling an 'item' class that serves as a container for 'book' and 'computer_games' classes. If the item container is deleted from the system, both books and computer games continue to exist independently in the catalogue. Which UML relationship correctly represents the connection between 'item' and its contained classes?",
+      "options": {
+        "A": "Composition, because the contained classes are structurally embedded within the item class and share its lifecycle",
+        "B": "Generalisation, because book and computer_games are specialised types that inherit all features from the item class",
+        "C": "Aggregation, because the contained classes exist independently and do not depend on the item container's lifecycle",
+        "D": "Association, because the item class simply sends messages to the book and computer_games classes when needed"
+      },
+      "correct": "C",
+      "rationale": "Aggregation represents a has-a relationship where the contained objects do not depend on the lifetime of the container. Since deleting the item container does not destroy books or computer games, they have independent lifecycles — this is the defining characteristic of aggregation, shown with an open diamond notation in UML.",
+      "distractorRationale": {
+        "A": "Composition implies a contains-a relationship where the contained objects depend on the container's lifecycle and are destroyed when the container is deleted. Since books and games survive the deletion of the item container, composition is incorrect.",
+        "B": "Generalisation implies that book and computer_games are specialised versions of item through inheritance. While there may also be an inheritance relationship, the question specifically describes containment with independent lifecycles, which is aggregation.",
+        "D": "A simple association represents a general relationship where classes interact through messages or attribute manipulation. The question describes a container-contained structural relationship with explicit lifecycle independence, which is more specifically aggregation."
+      }
+    },
+    {
+      "id": "q6",
+      "stem": "A team uses the noun-identification technique on the following problem description: 'The system shall allow registered customers to place orders for books. Each order must include a delivery address and a payment method.' After extracting all nouns, they must decide which candidates to discard. Which noun should be discarded and for what reason?",
+      "options": {
+        "A": "'payment method' should be discarded because it is an attribute of the order class rather than a standalone class",
+        "B": "'system' should be discarded because it is meta-language that describes the way the requirements are defined",
+        "C": "'delivery address' should be discarded because it is a vague term that cannot be precisely defined as a class",
+        "D": "'registered customers' should be discarded because it is redundant with the actor already defined in use cases"
+      },
+      "correct": "B",
+      "rationale": "The noun-identification technique specifically requires discarding meta-language nouns — terms that form part of how we define requirements rather than representing domain objects. 'System' describes the software being built and is part of the requirements language itself, not a meaningful domain class.",
+      "distractorRationale": {
+        "A": "'Payment method' could potentially be modelled as its own class (as shown in the lecture's paymentInfor class with creditCard and payPal subclasses), not merely an attribute. Whether it becomes a class depends on further analysis of its attributes and operations.",
+        "C": "'Delivery address' is not vague — it is a well-defined concept that can be modelled as a class with specific attributes like addressLine1, postcode, city, and country, as demonstrated in the lecture's address class.",
+        "D": "While registered customers are actors in use cases, they can also become classes in the class diagram (e.g., customerAccount). Being an actor does not automatically disqualify a noun from being a valid class candidate."
+      }
+    },
+    {
+      "id": "q7",
+      "stem": "An e-commerce system's class diagram includes a 'paymentInfor' superclass with subclasses 'creditCard' and 'payPal'. Both subclasses have an operation called requestPayment(), but creditCard processes the payment through a card network while payPal redirects to an external URL. At which phase does the system determine which version of requestPayment() to execute?",
+      "options": {
+        "A": "At compile-time through method overloading, because each subclass defines requestPayment() with different parameter lists",
+        "B": "At design-time through class modelling, because the UML diagram specifies which subclass operation to invoke in each scenario",
+        "C": "At run-time through method overriding, because the actual object type determines which subclass implementation is executed",
+        "D": "At link-time through static binding, because the compiler resolves the method call based on the declared superclass reference"
+      },
+      "correct": "C",
+      "rationale": "When subclasses override a method inherited from a superclass with their own implementation, the decision about which version to call is made at runtime based on the actual object type. This is runtime polymorphism (method overriding) — the creditCard or payPal object determines which requestPayment() implementation executes.",
+      "distractorRationale": {
+        "A": "Method overloading (compile-time polymorphism) involves methods with the same name but different parameter signatures within the same class. Here, both subclasses define requestPayment() with the same signature but different implementations, which is overriding, not overloading.",
+        "B": "The UML class diagram models the structure and relationships but does not execute code or determine runtime method dispatch. The diagram specifies that both subclasses have the operation, but the actual invocation decision occurs during program execution.",
+        "D": "Static binding resolves calls based on the declared type at compile time. With method overriding and polymorphism, dynamic binding is used — the actual object type at runtime determines which implementation runs, not the declared reference type."
+      }
+    },
+    {
+      "id": "q8",
+      "stem": "A designer is modelling a 'basketItem' class for an online bookstore. The class needs to store a collection of books with their quantities using a HashMap<book, quantity> structure. The designer marks all attributes and operations of basketItem with '#' visibility. What does this visibility choice imply about which classes can access basketItem's features?",
+      "options": {
+        "A": "Any class in the system can freely access and modify the basketItem's attributes and call its operations without restriction",
+        "B": "Only the basketItem class itself can access its own attributes and operations, preventing all external class access entirely",
+        "C": "Only classes that inherit from basketItem can access its attributes and operations, excluding unrelated associated classes",
+        "D": "Only classes within the same package as basketItem can access its attributes and operations, regardless of inheritance"
+      },
+      "correct": "C",
+      "rationale": "The '#' symbol denotes protected visibility, which means only subclasses of the class can use those features. This restricts access to the inheritance hierarchy — associated classes that do not inherit from basketItem cannot directly access its protected attributes or operations.",
+      "distractorRationale": {
+        "A": "Unrestricted access to all classes describes public visibility ('+'), not protected. Protected visibility is more restrictive and limits access to the class's inheritance hierarchy only.",
+        "B": "Preventing all external access describes private visibility ('-'). Protected visibility is less restrictive than private because it allows subclasses to access the features, while private restricts access to the owning class only.",
+        "D": "Package-level access is a language-specific concept (e.g., Java's default access modifier) and is not one of the three UML visibility levels. UML defines public (+), private (-), and protected (#), where protected specifically means subclass access."
+      }
+    },
+    {
+      "id": "q9",
+      "stem": "A team is designing class diagrams for an online bookstore by following the UML methodology. They have completed the use case diagrams (Step 1) and activity diagrams (Step 2). When transitioning to class diagrams (Step 3), they need to identify objects and operations. What is the correct approach to derive operations for each class from the activity diagrams?",
+      "options": {
+        "A": "Map each actor from the use case diagram to a separate class, then assign every activity from all diagrams as operations of that class",
+        "B": "Map each activity to the objects it reads from or writes to, then assign those activities as operations within the corresponding classes",
+        "C": "Map each transition between activities to an association between classes, then derive operations from the transition guard conditions",
+        "D": "Map each swimlane partition in the activity diagram to a class, then assign all activities within that partition as the class operations"
+      },
+      "correct": "B",
+      "rationale": "The lecture demonstrates that activities from activity diagrams map to operations in classes by examining which objects each activity reads from or writes to. For example, 'View items' reads from the book object, so book gets corresponding operations. This read/write analysis connects functional workflows to class features.",
+      "distractorRationale": {
+        "A": "Actors are external entities that interact with the system and do not directly become classes with all activities assigned as their operations. Objects within the system — identified through data requirements analysis — become classes, and activities map to their operations based on data interaction.",
+        "C": "Transitions between activities represent control flow in the process, not data relationships between classes. Associations between classes are derived from which objects collaborate, not from activity transition guard conditions.",
+        "D": "While swimlanes can indicate responsibility boundaries, they do not directly map to classes. The correct approach is to identify which data objects each activity interacts with, then group operations under the classes that own those objects."
+      }
+    },
+    {
+      "id": "q10",
+      "stem": "A designer creates an 'order' class with an attribute 'account: Object' that references the customerAccount class, and another attribute 'paymentInfor: Object' that references the payment class. On the CRC card, these are listed under Association relationships. A reviewer questions why the order class stores references to other objects as attributes rather than using inheritance. What is the correct justification for this design choice?",
+      "options": {
+        "A": "Association is used because order collaborates with customerAccount and paymentInfor as independent classes that exchange data",
+        "B": "Inheritance is used because order is a specialised version of customerAccount that adds payment processing capabilities",
+        "C": "Aggregation is used because order contains customerAccount and paymentInfor as parts that are destroyed with the order",
+        "D": "Composition is used because order and customerAccount share a lifecycle where neither can exist without the other present"
+      },
+      "correct": "A",
+      "rationale": "Association represents a relationship where classes interact by exchanging messages or referencing each other's attributes. The order class references customerAccount and paymentInfor as independent collaborating classes — an order uses account and payment information, but it is not a specialised type of either. The CRC card correctly identifies these as association relationships.",
+      "distractorRationale": {
+        "B": "Inheritance (generalisation) implies that order is a kind of customerAccount, which is semantically incorrect. An order is not a specialised type of customer account — it is a separate concept that references account information. These are fundamentally different domain concepts.",
+        "C": "Aggregation would mean the order is a container for customerAccount and paymentInfor parts. While order references these classes, deleting an order should not destroy the customer's account or payment information — these exist independently of any single order.",
+        "D": "Composition implies a lifecycle dependency where parts cannot exist without the whole. Customer accounts and payment information persist independently of any individual order — a customer account exists before and after an order, and payment methods are reused across multiple orders."
+      }
+    },
+    {
+      "id": "q11",
+      "stem": "A university system has a 'University' class and a 'Department' class. If the university is dissolved, all its departments cease to exist — they cannot operate independently. A junior designer models this using an open diamond (aggregation) between University and Department. A senior designer says this is incorrect. What is the correct relationship and why?",
+      "options": {
+        "A": "Association with a plain line, because the university and department interact only through message-passing and have no structural dependency",
+        "B": "Generalisation with an open arrowhead, because department is a specialised subtype of university that inherits its organisational features",
+        "C": "Aggregation with an open diamond is correct, because any container-contained relationship between organisational classes uses this notation",
+        "D": "Composition with a filled diamond, because departments depend on the university's lifecycle and cannot exist independently outside of it"
+      },
+      "correct": "D",
+      "rationale": "Composition (filled diamond) is the correct relationship because the existence of the contained object (Department) depends on the lifetime of the container object (University). When the university is dissolved, departments are destroyed — this lifecycle dependency is the defining characteristic of composition, not aggregation.",
+      "distractorRationale": {
+        "A": "Association represents a general interaction relationship through messages or attribute references. The scenario describes a structural containment with lifecycle dependency, which is a stronger relationship than a simple association.",
+        "B": "Generalisation implies an is-a relationship where department would be a kind of university. A department is not a specialised type of university — it is a part of a university, which is a structural containment relationship.",
+        "C": "Aggregation (open diamond) represents a has-a relationship where contained objects have independent lifecycles. Since departments cannot exist without the university, the open diamond is incorrect — the filled diamond (composition) is required to capture the lifecycle dependency."
+      }
+    },
+    {
+      "id": "q12",
+      "stem": "An online store has a 'Customer' class and a 'Wishlist' class. When a customer deletes their account, all their wishlists are permanently removed from the system. A colleague argues this should be modelled as aggregation because wishlists are collections of product references. Which analysis correctly determines the appropriate relationship?",
+      "options": {
+        "A": "Aggregation is correct because wishlists group product references together, and any class that acts as a collection must use the open diamond",
+        "B": "Composition is correct because the wishlist's existence depends on the customer's lifecycle, making the filled diamond the appropriate notation",
+        "C": "Association is correct because the customer and wishlist exchange data through operations, and structural containment does not apply here",
+        "D": "Aggregation is correct because wishlists reference products that exist independently, so the wishlist itself must also be independent"
+      },
+      "correct": "B",
+      "rationale": "The key test for choosing between aggregation and composition is lifecycle dependency. Since wishlists are permanently removed when the customer account is deleted, the wishlist's existence depends on the customer's lifetime. This lifecycle dependency defines composition (filled diamond), regardless of what the wishlist internally contains.",
+      "distractorRationale": {
+        "A": "Being a collection does not automatically determine the relationship type. The deciding factor is lifecycle dependency — whether the contained object survives the container's deletion. Since wishlists do not survive, aggregation is incorrect.",
+        "C": "While the customer and wishlist may exchange messages, the scenario describes a structural ownership where deletion of the customer destroys the wishlist. This lifecycle dependency makes it a composition relationship, not a simple association.",
+        "D": "The independence of products referenced inside the wishlist is irrelevant to the Customer-Wishlist relationship. The question is whether the wishlist itself survives the customer's deletion — it does not, so composition applies."
+      }
+    },
+    {
+      "id": "q13",
+      "stem": "A fleet management system models a 'Car' class and an 'Engine' class. The engine is manufactured separately, installed into a car, and can be removed and transferred to another car. When a car is scrapped, the engine may be salvaged and reused elsewhere. Which relationship correctly models the connection between Car and Engine?",
+      "options": {
+        "A": "Aggregation, because the engine has an independent lifecycle and can exist separately from any particular car in the fleet system",
+        "B": "Composition, because the engine is physically contained inside the car and forms an essential structural component of the vehicle",
+        "C": "Association, because the car and engine are unrelated classes that only interact through temporary message-passing at runtime",
+        "D": "Generalisation, because the engine is a specialised mechanical component that inherits all structural attributes from the car class"
+      },
+      "correct": "A",
+      "rationale": "Aggregation (open diamond) is correct because the engine has an independent lifecycle — it can exist before being installed, can be removed, and can survive the car being scrapped. The contained object (engine) does not depend on the container's (car's) lifetime, which is the defining characteristic of aggregation.",
+      "distractorRationale": {
+        "B": "Physical containment does not automatically mean composition in UML. Composition requires lifecycle dependency — the contained object must be destroyed when the container is destroyed. Since the engine survives the car being scrapped, this is aggregation, not composition.",
+        "C": "The relationship between car and engine is structural containment (a car has-a engine), not a simple interaction through messages. Association would underrepresent the structural nature of this container-contained relationship.",
+        "D": "Generalisation implies an is-a relationship where engine would be a kind of car. An engine is not a specialised type of car — it is a part contained within a car, which is a has-a relationship modelled by aggregation."
+      }
+    },
+    {
+      "id": "q14",
+      "stem": "A designer reviews a class diagram that uses a filled diamond on the line between an 'Invoice' class and a 'LineItem' class. A new team member asks what would happen to the LineItem objects if their parent Invoice is deleted from the system. Based on the filled diamond notation, what is the correct answer?",
+      "options": {
+        "A": "The LineItem objects are reassigned to a different Invoice because the filled diamond allows contained objects to migrate between containers",
+        "B": "The LineItem objects remain in the system as independent entities because the filled diamond indicates only a weak structural grouping",
+        "C": "The LineItem objects are destroyed along with the Invoice because the filled diamond denotes composition with full lifecycle dependency",
+        "D": "The LineItem objects are converted into standalone product records because the filled diamond triggers automatic data transformation on deletion"
+      },
+      "correct": "C",
+      "rationale": "The filled diamond represents composition, which means the contained objects (LineItems) depend on the container's (Invoice's) lifecycle. When the Invoice is deleted, all its LineItems are destroyed because they cannot exist independently — this is the core semantic meaning of the composition notation.",
+      "distractorRationale": {
+        "A": "Composition (filled diamond) does not allow contained objects to migrate between containers. The contained objects are owned exclusively by their container and are destroyed when it is deleted. Migration between containers is a characteristic of aggregation, not composition.",
+        "B": "The filled diamond does not indicate a weak grouping — that would be the open diamond (aggregation). The filled diamond specifically denotes the strongest form of containment where the contained objects share the container's lifecycle.",
+        "D": "UML composition does not define any automatic data transformation behaviour. The filled diamond simply indicates that the contained objects depend on the container's lifecycle and are destroyed when the container is deleted."
+      }
+    },
+    {
+      "id": "q15",
+      "stem": "The lecture states that aggregation is implemented 'as association relationship' while composition is implemented 'as one merged class.' A developer needs to implement a 'Playlist' class that aggregates 'Song' objects, where songs exist independently in a music library. How should this aggregation be translated into code?",
+      "options": {
+        "A": "The Playlist class should inherit from the Song class so that all song attributes and operations become part of the playlist's own definition",
+        "B": "The Playlist class should hold references to Song objects as attributes, treating the connection like an association between two separate classes",
+        "C": "The Playlist and Song classes should be combined into a single PlaylistSong class containing all attributes and operations from both originals",
+        "D": "The Playlist class should create and destroy Song objects internally, ensuring that songs exist only within the scope of a playlist instance"
+      },
+      "correct": "B",
+      "rationale": "Since aggregation is implemented as an association relationship, the Playlist class holds references to Song objects as attributes — treating the two classes as separate entities linked by navigable references. The songs exist independently in the music library and are not owned or destroyed by the playlist.",
+      "distractorRationale": {
+        "A": "Inheritance (generalisation) implies Playlist is-a Song, which is semantically incorrect. A playlist is not a specialised type of song — it is a container that holds references to multiple independent song objects.",
+        "C": "Merging into a single class is the implementation approach for composition, not aggregation. Aggregation preserves both classes as separate entities connected through references, because the contained objects have independent lifecycles.",
+        "D": "Creating and destroying songs internally would impose lifecycle dependency, which contradicts the aggregation semantics. Songs exist independently in the library and should not be destroyed when a playlist is removed."
+      }
+    },
+    {
+      "id": "q16",
+      "stem": "A hospital system has three classes: 'Hospital', 'Ward', and 'Patient'. Wards cannot exist without the hospital — if the hospital closes, its wards are dissolved. Patients exist independently and can be transferred to another hospital. A designer models both Hospital-Ward and Hospital-Patient as composition (filled diamond). What is the flaw?",
+      "options": {
+        "A": "Both relationships should use aggregation because hospitals are organisational containers, and all container relationships require the open diamond",
+        "B": "The Hospital-Ward relationship should use association because wards interact with the hospital only through operational message exchanges",
+        "C": "The Hospital-Patient relationship should use generalisation because patients are specialised entities that inherit from the hospital's structure",
+        "D": "The Hospital-Patient relationship should use aggregation because patients have independent lifecycles and are not destroyed with the hospital"
+      },
+      "correct": "D",
+      "rationale": "The Hospital-Ward relationship is correctly modelled as composition because wards depend on the hospital's lifecycle. However, the Hospital-Patient relationship should be aggregation (open diamond) because patients exist independently — they can be transferred to another hospital and are not destroyed when the hospital closes.",
+      "distractorRationale": {
+        "A": "Not all container relationships use aggregation. The relationship type depends on lifecycle dependency: wards cannot exist without the hospital (composition), while patients can (aggregation). Using aggregation for both would incorrectly imply wards have independent lifecycles.",
+        "B": "The Hospital-Ward relationship correctly uses composition because wards depend on the hospital's existence. Changing it to association would underrepresent the structural ownership and lifecycle dependency between the hospital and its wards.",
+        "C": "Generalisation implies patients are a kind of hospital, which is semantically nonsensical. Patients are independent entities that are contained within (not derived from) a hospital, making this a containment relationship, not an inheritance one."
+      }
+    },
+    {
+      "id": "q17",
+      "stem": "A project management tool has a 'Project' class, a 'Task' class, and a 'Developer' class. Tasks cannot exist without a project — deleting a project removes all its tasks. Developers exist independently and can work on multiple projects simultaneously. Which combination of relationships correctly models these constraints?",
+      "options": {
+        "A": "Composition between Project and Task using a filled diamond, and association between Project and Developer using a plain line with multiplicity",
+        "B": "Aggregation between Project and Task using an open diamond, and composition between Project and Developer using a filled diamond notation",
+        "C": "Association between Project and Task using a plain line, and aggregation between Project and Developer using an open diamond at Project",
+        "D": "Composition between Project and Task using a filled diamond, and generalisation between Project and Developer using an open arrowhead"
+      },
+      "correct": "A",
+      "rationale": "Tasks depend on the project's lifecycle (deleting a project removes its tasks), so composition (filled diamond) is correct for Project-Task. Developers are independent entities that collaborate with projects through message-passing and data exchange, making association (plain line with multiplicity) the appropriate relationship.",
+      "distractorRationale": {
+        "B": "Aggregation for Project-Task is incorrect because tasks cannot exist without their project — they have lifecycle dependency, which requires composition. Composition for Project-Developer is incorrect because developers exist independently and are not destroyed when a project ends.",
+        "C": "Association for Project-Task underrepresents the lifecycle dependency — tasks are structurally owned by the project and destroyed with it. Aggregation for Project-Developer implies developers are contained parts of a project, but they are independent collaborators, not contained components.",
+        "D": "While composition for Project-Task is correct, generalisation for Project-Developer implies developers are specialised types of projects. A developer is not a kind of project — they are an independent entity that collaborates with projects."
+      }
+    },
+    {
+      "id": "q18",
+      "stem": "A 'Department' class contains 'Employee' objects. An employee can belong to multiple departments simultaneously, such as a consultant working across departments. If a department is dissolved, its employees continue working in their other departments. Which relationship is appropriate, and what characteristic determines this choice?",
+      "options": {
+        "A": "Composition is appropriate because the department structurally contains employees, and any physical containment requires the filled diamond notation",
+        "B": "Generalisation is appropriate because employees are specialised entities that inherit department-level attributes and organisational access permissions",
+        "C": "Aggregation is appropriate because employees have independent lifecycles and can be shared across multiple department containers simultaneously",
+        "D": "Association is appropriate because departments and employees have no structural containment and only exchange messages during runtime operations"
+      },
+      "correct": "C",
+      "rationale": "Aggregation (open diamond) is correct because employees have independent lifecycles — they survive a department being dissolved and can belong to multiple departments simultaneously. The ability to be shared across containers and the lack of lifecycle dependency are defining characteristics of aggregation.",
+      "distractorRationale": {
+        "A": "Structural containment does not automatically require composition. Composition requires exclusive ownership and lifecycle dependency. Since employees can belong to multiple departments and survive a department's dissolution, composition is too restrictive for this scenario.",
+        "B": "Generalisation implies employees are-a-kind-of department, which is semantically incorrect. Employees are contained within departments as parts, not specialised subtypes. This is a containment relationship, not a taxonomic one.",
+        "D": "While departments and employees do interact through messages, there is a clear structural containment relationship — a department has employees. Simple association underrepresents this container-contained structure, which is better captured by aggregation."
+      }
+    },
+    {
+      "id": "q19",
+      "stem": "A 'House' class contains a 'Room' class. Rooms are structurally part of the house and cannot be detached or moved to another house. When the house is demolished, all its rooms are destroyed. A designer initially models this with an open diamond (aggregation). What change should be made, and how does the lecture suggest this affects implementation?",
+      "options": {
+        "A": "Change to composition with a filled diamond, which means Room should be implemented as embedded attributes and operations merged into the House class",
+        "B": "Keep as aggregation with an open diamond, which means Room should be implemented as a separate class referenced through association-style links",
+        "C": "Change to association with a plain line, which means House should reference Room objects through navigable attribute pointers in the code",
+        "D": "Change to generalisation with an open arrowhead, which means Room should inherit all structural attributes and lifecycle operations from the House class"
+      },
+      "correct": "A",
+      "rationale": "Since rooms cannot exist independently and are destroyed when the house is demolished, the relationship has lifecycle dependency — this requires composition (filled diamond), not aggregation. The lecture states that composition is implemented 'as one merged class,' meaning Room's attributes and operations are embedded within the House class.",
+      "distractorRationale": {
+        "B": "Aggregation is incorrect because rooms have lifecycle dependency on the house — they cannot be detached or survive demolition. Keeping aggregation would incorrectly imply rooms can exist independently, contradicting the stated requirements.",
+        "C": "Association represents a general interaction relationship without structural containment. Rooms are structurally contained within the house with lifecycle dependency, which requires the stronger composition relationship, not a simple navigable reference.",
+        "D": "Generalisation implies rooms are specialised types of houses, which is semantically incorrect. A room is not a kind of house — it is a contained structural part of a house, which is a composition relationship."
+      }
+    },
+    {
+      "id": "q20",
+      "stem": "A social media platform has a 'Post' class, a 'Comment' class, and a 'User' class. Comments cannot exist without their parent post — deleting a post removes all its comments. Users exist independently and can interact with many posts. A designer uses composition for Post-Comment and aggregation for Post-User. What is wrong with the Post-User relationship?",
+      "options": {
+        "A": "Aggregation should be replaced with composition because users are permanently bound to the posts they interact with in the system",
+        "B": "Aggregation should be replaced with generalisation because users are a specialised type of post participant inheriting post-level features",
+        "C": "Aggregation is correct because users are collected within posts as contained parts, and the open diamond accurately represents this grouping",
+        "D": "Aggregation should be replaced with association because users are not contained parts of a post but independent entities that collaborate with it"
+      },
+      "correct": "D",
+      "rationale": "Aggregation implies a container-contained (has-a) relationship where users would be parts of a post. Users are not contained within posts — they are independent entities that interact with posts through operations like commenting and liking. Association (plain line) correctly represents this collaboration between independent classes.",
+      "distractorRationale": {
+        "A": "Users are not permanently bound to posts. They exist independently, can interact with many posts, and continue to exist if a post is deleted. Composition would incorrectly imply users are destroyed when a post is removed.",
+        "B": "Generalisation implies users are-a-kind-of post, which is semantically nonsensical. Users and posts are fundamentally different domain concepts — users create and interact with posts, they do not inherit from them.",
+        "C": "Users are not contained parts of a post. Aggregation represents a has-a relationship where the container collects its parts. A post does not 'have' users as structural components — users are independent actors that interact with posts."
+      }
+    }
+  ]
+}
